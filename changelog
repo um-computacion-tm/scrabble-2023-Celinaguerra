@@ -12,3 +12,15 @@
 - Improved the tiles class, added all correct letter values
 - Upgraded tests based on new letter and bag values
 
+##[0.0.3] - 2023-08-22
+
+### Added
+
+- Creation of the board class
+- Included prototype of the scrabble board
+- Current problem: how to signalize the triple word, double word, triple letter and double letter tiles
+
+
+### Updated
+
+- Updated tests, there's 6 more test including diverse letter value

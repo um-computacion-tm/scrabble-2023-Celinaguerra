@@ -148,14 +148,13 @@ class BagTiles:
     def put(self,tiles):
         self.tiles.extend(tiles)
 
+class Board:
+    def __init__(self):
+        self.board = [["_"] * 15 for i in range(15)]
 
-
-
-
-
-
-
-
+    def print_board(self):
+        for row in self.board:
+            print(" ".join(row))
 
 
 
