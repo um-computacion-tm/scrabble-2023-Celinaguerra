@@ -1,31 +1,3 @@
-"""S C R A B B L E
-2-4 jugadores
-
-CLASES¿¿¿
-
-- tablero
-    -casilla
-        - multiplicadores
-- comodin
-- jugador
-    -puntaje
-- bolsa
-    - letras: valor letra, valor ptos
--game
-    -turnos
-
------------------------------------------------------------------
-
-- cobertura: que los test cubran el 90% de los casos posibles (usar CodeClimate o coveralls.io)
-- en cada commit todos los test deben estar funcionales
-
-
-#hacer main (probablemente?)
-# jugador <--> linea de comandos <--> game
-
-
-OBJ: repo con integracion continua, coverage, etc. Configurar las cosas"""
-
 import random
 
 class Tile:
@@ -148,13 +120,24 @@ class BagTiles:
     def put(self,tiles):
         self.tiles.extend(tiles)
 
-class Board:
-    def __init__(self):
-        self.board = [["_"] * 15 for i in range(15)]
 
-    def print_board(self):
-        for row in self.board:
-            print(" ".join(row))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,5 @@
 import unittest
-from game.models import (Tile, BagTiles, Board)
+from game.models import (Tile, BagTiles)
 from unittest.mock import patch
 
 class TestTiles(unittest.TestCase):
@@ -90,13 +90,6 @@ class TestBagTiles(unittest.TestCase):
             len(bag.tiles),
             102,
         )
-
-class TestBoard(unittest.TestCase):
-    def test_board_print(self):
-        print("Test: Printing the board")
-        board = Board()
-        print("Initial empty board:")
-        board.print_board()
 
 
 
