@@ -1,5 +1,5 @@
 import unittest
-from game.board import Board
+from game.scrabble import Board
 
 class TestBoard(unittest.TestCase):
     def test__init__(self):

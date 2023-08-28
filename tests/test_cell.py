@@ -1,6 +1,6 @@
 import unittest
-from game.cell import Cell
-from game.models import Tile
+from game.scrabble import Cell
+from game.scrabble import Tile
 
 class TestCell(unittest.TestCase):
     def test__init__(self):
