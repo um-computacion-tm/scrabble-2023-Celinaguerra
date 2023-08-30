@@ -34,3 +34,15 @@
 
 ### Fixed
 - Improved board class, problem solved
+
+##[0.0.5] - 2023-8-27
+
+### Updated
+
+- Updated files, now all files are in one single file. Test are still separated
+
+##[0.0.6] - 2023-8-29
+
+### Added
+
+- Added Dictioanry class and test. Problem: not working.

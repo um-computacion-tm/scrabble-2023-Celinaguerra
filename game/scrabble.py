@@ -159,3 +159,15 @@ class ScrabbleGame:
         self.players = []
         for _ in range (players_count):
             self.players.append(Player())
+
+class Dictionary:
+    def __init__(self, filepath):
+        self.file_path = file_path
+        self.words = self.load_words()
+
+    def load_words(self):
+        with open(self.file_path, 'r') as file:
+            return set(line.strip() for line in file)
+
+    def is_word_in_dic(self,word):
+        return word in self.words
