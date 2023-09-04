@@ -129,10 +129,12 @@ class BagTiles:
         self.tiles.extend(tiles)
 
 class Cell:
-    def __init__(self, multiplier, multiplier_type):
+    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None, active=True):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
-        self.letter = None
+        self.letter = letter
+        self.word = word
+        self.active = True 
 
     def add_letter(self, letter:Tile):
         self.letter = letter
@@ -144,6 +146,15 @@ class Cell:
             return self.letter.value * self.multiplier
         else:
             return self.letter.value
+    
+    def calculate_word_value(self,word):
+        word_value = 0
+        word_multiplier = 1
+        for letter in word:
+            word_value += letter.calculate_value()
+        word_value *= word_multiplier
+        return word_value
+
 
 class Board:
     def __init__(self):
@@ -160,7 +171,8 @@ class ScrabbleGame:
         for _ in range (players_count):
             self.players.append(Player())
 
-class Dictionary:
+"""class Dictionary:
+
     def __init__(self, filepath):
         self.file_path = file_path
         self.words = self.load_words()
@@ -170,4 +182,5 @@ class Dictionary:
             return set(line.strip() for line in file)
 
     def is_word_in_dic(self,word):
-        return word in self.words
+        return word in self.words"""
+

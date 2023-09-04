@@ -46,3 +46,10 @@
 ### Added
 
 - Added Dictioanry class and test. Problem: not working.
+
+##[0.0.7] - 2023-9-3
+
+### Added
+
+- Added function to calculate the value of a word
+- Added test to test it
