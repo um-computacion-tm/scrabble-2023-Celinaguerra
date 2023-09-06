@@ -1,12 +1,13 @@
 import random
 
+
 class Player:
     def __init__(self):
         bag = BagTiles()
         self.tiles = bag.take(7)
 
     def score(self):
-        self.score = 0
+        self.score = score
 
 class Tile:
     def __init__(self,letter,value):
@@ -143,7 +144,9 @@ class Cell:
         if self.letter is None:
             return 0
         if self.multiplier_type == 'letter':
-            return self.letter.value * self.multiplier
+            value = self.letter.value * self.multiplier
+            self.multiplier_type = None
+            return value
         else:
             return self.letter.value
     
@@ -152,8 +155,12 @@ class Cell:
         word_multiplier = 1
         for letter in word:
             word_value += letter.calculate_value()
+            if letter.multiplier_type == 'word':
+                word_multiplier = letter.multiplier
+                letter.multiplier_type = None
         word_value *= word_multiplier
         return word_value
+
 
 
 class Board:

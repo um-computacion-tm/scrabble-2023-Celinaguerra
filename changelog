@@ -53,3 +53,14 @@
 
 - Added function to calculate the value of a word
 - Added test to test it
+
+##[0.0.8] - 2023-9-5
+
+### Added
+
+- added main
+- added tests to cell
+
+### Updated
+
+- upgraded function to calculate word value

@@ -3,6 +3,7 @@ from game.scrabble import Tile
 from game.scrabble import Cell
 
 
+
 class TestCalculateWordValue(unittest.TestCase):
     def test_simple(self):
         cell = Cell(multiplier=None, multiplier_type='')
