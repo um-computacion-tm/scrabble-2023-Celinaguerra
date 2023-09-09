@@ -64,3 +64,19 @@
 ### Updated
 
 - upgraded function to calculate word value
+
+
+##[0.0.9] - 2023-9-8
+
+### Removed
+
+- removed Dictionary class and test, will update later
+
+### Updated
+
+- updated some methods
+
+### Added
+
+- added method that calculates the next player's turn
+- added test

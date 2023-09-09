@@ -3,7 +3,7 @@ from game.scrabble import Player
 
 class TestPlayer(unittest.TestCase):
     def test_init(self):
-        player1 = Player()
+        player1 = Player(id=1)
         self.assertEqual(
             len(player1.tiles),
             7,

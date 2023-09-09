@@ -2,10 +2,12 @@ import random
 
 
 class Player:
-    def __init__(self):
+    def __init__(self, id:int):
+        self.id = id
         bag = BagTiles()
         self.tiles = bag.take(7)
-
+        self.score = 0
+        
     def score(self):
         self.score = score
 
@@ -161,8 +163,6 @@ class Cell:
         word_value *= word_multiplier
         return word_value
 
-
-
 class Board:
     def __init__(self):
         self.grid = [
@@ -171,23 +171,21 @@ class Board:
         ]
 
 class ScrabbleGame:
-    def __init__(self, players_count):
+    def __init__(self, players_count:int):
         self.board = Board()
         self.bag_tiles = BagTiles()
-        self.players = []
-        for _ in range (players_count):
-            self.players.append(Player())
+        self.players:list[Player] = []
+        for _ in range(players_count):
+            self.players.append(Player(id=_))
+        self.current_player = None
+        
+    def next_turn(self):
+        if self.current_player is None:
+            self.current_player = self.players[0]
 
-"""class Dictionary:
-
-    def __init__(self, filepath):
-        self.file_path = file_path
-        self.words = self.load_words()
-
-    def load_words(self):
-        with open(self.file_path, 'r') as file:
-            return set(line.strip() for line in file)
-
-    def is_word_in_dic(self,word):
-        return word in self.words"""
-
+        elif self.current_player == self.players[-1]:
+            self.current_player = self.players[0]
+        
+        else:
+            index = self.players.index(self.current_player) + 1
+            self.current_player = self.players[index]
