@@ -80,3 +80,12 @@
 
 - added method that calculates the next player's turn
 - added test
+
+
+##[0.0.10] - 2023-9-9
+
+### Added
+
+- added more tests for next_turn function
+
+- added func to set name of player, added tests.

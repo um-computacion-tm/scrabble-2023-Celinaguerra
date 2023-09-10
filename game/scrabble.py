@@ -2,14 +2,21 @@ import random
 
 
 class Player:
-    def __init__(self, id:int):
+    def __init__(self, id:int, name=None):
         self.id = id
         bag = BagTiles()
         self.tiles = bag.take(7)
         self.score = 0
         
-    def score(self):
+    def set_name(self, name):
+        self.name = name
+        return name
+
+    #conectar con calculate_word_value
+    """def score(self):
         self.score = score
+""" 
+
 
 class Tile:
     def __init__(self,letter,value):
