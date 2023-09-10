@@ -34,3 +34,58 @@
 
 ### Fixed
 - Improved board class, problem solved
+
+##[0.0.5] - 2023-8-28
+
+### Updated
+
+- Updated files, now all files are in one single file. Test are still separated
+
+##[0.0.6] - 2023-8-29
+
+### Added
+
+- Added Dictioanry class and test. Problem: not working.
+
+##[0.0.7] - 2023-9-3
+
+### Added
+
+- Added function to calculate the value of a word
+- Added test to test it
+
+##[0.0.8] - 2023-9-5
+
+### Added
+
+- added main
+- added tests to cell
+
+### Updated
+
+- upgraded function to calculate word value
+
+
+##[0.0.9] - 2023-9-8
+
+### Removed
+
+- removed Dictionary class and test, will update later
+
+### Updated
+
+- updated some methods
+
+### Added
+
+- added method that calculates the next player's turn
+- added test
+
+
+##[0.0.10] - 2023-9-9
+
+### Added
+
+- added more tests for next_turn function
+
+- added func to set name of player, added tests.

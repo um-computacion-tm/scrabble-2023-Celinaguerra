@@ -9,4 +9,27 @@ class TestScrabbleGame(unittest.TestCase):
             len(scrabble_game.players),
             3,
         )
+        for players in scrabble_game.players:
+            self.assertIsNotNone(players.id)
         self.assertIsNotNone(scrabble_game.bag_tiles)
+
+    def test_next_turn_when_game_is_starting(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.next_turn()
+        assert scrabble_game.current_player == scrabble_game.players[0]
+
+    def test_next_turn_when_player_isnt_the_first(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[0]
+        
+        scrabble_game.next_turn()
+        assert scrabble_game.current_player == scrabble_game.players[1]
+        
+    def test_next_turn_when_game_is_last(self):
+        scrabble_game = ScrabbleGame(players_count=3)
+        scrabble_game.current_player = scrabble_game.players[2]
+
+        scrabble_game.next_turn()
+        assert scrabble_game.current_player == scrabble_game.players[0]
+
+        

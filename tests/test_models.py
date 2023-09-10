@@ -1,5 +1,5 @@
 import unittest
-from game.models import (Tile, BagTiles)
+from game.scrabble import (Tile, BagTiles)
 from unittest.mock import patch
 
 class TestTiles(unittest.TestCase):
