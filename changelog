@@ -89,3 +89,12 @@
 - added more tests for next_turn function
 
 - added func to set name of player, added tests.
+
+
+##[0.0.11] - 2023-9-11
+
+### Added
+
+- function that verifies if a word has space to be placed on the board
+
+- added tests
