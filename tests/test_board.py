@@ -1,5 +1,5 @@
 import unittest
-from game.scrabble import Board
+from game.scrabble import Board, Tile
 
 class TestBoard(unittest.TestCase):
     def test__init__(self):
@@ -45,6 +45,10 @@ class TestBoard(unittest.TestCase):
         orientation = 'V'
         word_is_valid = board.validate_word_inside_board(word,location,orientation)
         assert word_is_valid == False
+
+"""    def test_board_is_empty(self):
+        board = Board()
+        assert board.is_empty == True"""
 
 if __name__ == "__main__":
     unittest.main

@@ -114,3 +114,15 @@
 - continued integration
 
 - README
+
+##[0.0.13] - 2023-9-13
+
+### Added
+
+- Function that validated if the word exists or not
+
+### Updated
+
+- finished integration
+
+- Dictionary class, list of words working
