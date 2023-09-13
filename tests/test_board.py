@@ -46,9 +46,9 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_inside_board(word,location,orientation)
         assert word_is_valid == False
 
-"""    def test_board_is_empty(self):
-        board = Board()
-        assert board.is_empty == True"""
+# """    def test_board_is_empty(self):
+#         board = Board()
+#         assert board.is_empty == True"""
 
 if __name__ == "__main__":
     unittest.main
