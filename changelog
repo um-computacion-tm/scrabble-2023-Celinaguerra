@@ -98,3 +98,19 @@
 - function that verifies if a word has space to be placed on the board
 
 - added tests
+
+- started integration. Problem: badges are not showing.
+
+##[0.0.12] - 2023-9-12
+
+### Added
+
+- list of words, Dictionary class, not working
+
+### Updated
+
+- added more tests to test_board
+
+- continued integration
+
+- README

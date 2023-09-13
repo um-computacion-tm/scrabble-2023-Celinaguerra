@@ -30,6 +30,21 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_inside_board(word, location, orientation)
         assert word_is_valid == True
 
+    def test_word_outside_board_x(self):
+        board = Board()
+        word = 'jalapeño'
+        location = (10,10)
+        orientation = 'H'
+        word_is_valid = board.validate_word_inside_board(word,location,orientation)
+        assert word_is_valid == False
+
+    def test_word_outside_board_y(self):
+        board = Board()
+        word = 'mantis'
+        location = (1,14)
+        orientation = 'V'
+        word_is_valid = board.validate_word_inside_board(word,location,orientation)
+        assert word_is_valid == False
 
 if __name__ == "__main__":
     unittest.main

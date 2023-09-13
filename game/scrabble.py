@@ -139,7 +139,7 @@ class BagTiles:
         self.tiles.extend(tiles)
 
 class Cell:
-    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None, active=True):
+    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
         self.letter = letter

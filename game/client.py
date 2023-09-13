@@ -1,6 +1,6 @@
-from game.scrabble import ScrabbleGame
+"""from game.scrabble import ScrabbleGame
 
-"""class Main:
+class Main:
     def main():
         player_count = int(input('cantidad de jugadores'))
         game = ScrabbleGame(player_count)
