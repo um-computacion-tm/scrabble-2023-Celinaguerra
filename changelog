@@ -89,3 +89,40 @@
 - added more tests for next_turn function
 
 - added func to set name of player, added tests.
+
+
+##[0.0.11] - 2023-9-11
+
+### Added
+
+- function that verifies if a word has space to be placed on the board
+
+- added tests
+
+- started integration. Problem: badges are not showing.
+
+##[0.0.12] - 2023-9-12
+
+### Added
+
+- list of words, Dictionary class, not working
+
+### Updated
+
+- added more tests to test_board
+
+- continued integration
+
+- README
+
+##[0.0.13] - 2023-9-13
+
+### Added
+
+- Function that validated if the word exists or not
+
+### Updated
+
+- finished integration
+
+- Dictionary class, list of words working
