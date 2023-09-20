@@ -206,7 +206,8 @@ class Board:
             else:
                 return True
 
-
+    def is_empty(self):
+        pass
 
 class ScrabbleGame:
     def __init__(self, players_count:int):
