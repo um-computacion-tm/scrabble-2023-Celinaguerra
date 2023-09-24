@@ -84,11 +84,12 @@ class TestBagTiles(unittest.TestCase):
 
     def test_put(self):
         bag = BagTiles()
+        tiles = bag.take(5)
         put_tiles = [Tile('Z',1), Tile('Y',1)]
         bag.put(put_tiles)
         self.assertEqual(
             len(bag.tiles),
-            102,
+            97,
         )
 
 

@@ -46,9 +46,24 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_inside_board(word,location,orientation)
         assert word_is_valid == False
 
-# """    def test_board_is_empty(self):
-#         board = Board()
-#         assert board.is_empty == True"""
+    def test_board_is_empty(self):
+        board = Board()
+        assert board.is_empty == True
+
+    def test_board_is_not_empty(self):
+        board = Board()
+        board.grid[7][7].add_letter(Tile('C', 1))
+        actually_empty = board.validate_empty()
+        assert actually_empty == False
+
+    def test_place_word_empty_board_horizontal_fine(self):
+        board = Board()
+        word = "Facultad"
+        location = (7, 4)
+        orientation = "H"
+        #word_is_valid = board.validate_word_place_board(word, location, orientation)
+        word_is_valid = board.put_words(word, location, orientation) #es put lo mismo que validate?
+        assert word_is_valid == True
 
 if __name__ == "__main__":
     unittest.main

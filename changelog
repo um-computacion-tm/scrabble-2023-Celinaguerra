@@ -121,8 +121,24 @@
 
 - Function that validated if the word exists or not
 
+##[0.0.14] - 2023-9-20
+
+### Added
+
+- function that checks if the board is empty. Tests (not working)
+
 ### Updated
 
 - finished integration
 
 - Dictionary class, list of words working
+
+##[0.0.15] - 2023-9-23
+
+### Updated
+
+- tests
+
+- is_empty now working
+
+- updated put_words, still working on it

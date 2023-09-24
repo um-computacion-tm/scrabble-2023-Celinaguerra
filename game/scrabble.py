@@ -157,7 +157,6 @@ class Cell:
         self.multiplier_type = multiplier_type
         self.letter = letter
         self.word = word
-        self.active = True 
 
     def add_letter(self, letter:Tile):
         self.letter = letter
@@ -185,10 +184,16 @@ class Cell:
 
 class Board:
     def __init__(self):
+        self.is_empty = True
         self.grid = [
             [Cell(1,'letter') for _ in range (15) ]
             for _ in range (15)
         ]
+
+    def validate_empty(self):
+        if self.grid[7][7] is not None:
+            self.is_empty = False
+        return self.is_empty
 
     def validate_word_inside_board(self, word, location, orientation):
         len_word = len(word)
@@ -206,7 +211,23 @@ class Board:
             else:
                 return True
 
+    def get_words():
+        '''
+        Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion y orientacion 
+        validar palabras (unir al dic)
+        '''
 
+    def put_words(self, word, location, orientation):
+        len_word = len(word)
+        pos_x = location[0]
+        pos_y = location[1]
+        if orientation == 'H':
+            for i in range (len_word):
+                self.grid[pos_x][pos_y].add_letter(word[i])
+        else:
+            for i in range (len_word):
+                self.grid[pos_x][pos_y].add_letter(word[i])
+        #hay que armar tablero para ver graficamente el lugar donde se colocan las fichas
 
 class ScrabbleGame:
     def __init__(self, players_count:int):
@@ -227,14 +248,3 @@ class ScrabbleGame:
         else:
             index = self.players.index(self.current_player) + 1
             self.current_player = self.players[index]
-
-    def get_words():
-        '''
-        Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion y orientacion 
-        Preguntar al usuario, por cada una de esas palabras, las que considera reales
-        '''
-
-    def put_words():
-        '''
-        Modifica el estado del tablero con las palabras consideradas como correctas
-        '''
