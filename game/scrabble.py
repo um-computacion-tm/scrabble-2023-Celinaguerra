@@ -223,11 +223,26 @@ class Board:
         pos_y = location[1]
         if orientation == 'H':
             for i in range (len_word):
-                self.grid[pos_x][pos_y].add_letter(word[i])
+                self.grid[pos_x][pos_y + i].add_letter(word[i])
         else:
             for i in range (len_word):
-                self.grid[pos_x][pos_y].add_letter(word[i])
-        #hay que armar tablero para ver graficamente el lugar donde se colocan las fichas
+                self.grid[pos_x + i][pos_y].add_letter(word[i])
+    ## VER COMO SELECCIONAR VERTICALIDAD (HACIA ARRIBA O HACIA ABAJO)
+
+    def print_board(self):
+        #ver como sacar el _. de donde hay letras
+        printed_board = []
+        for row in range(15):
+            printed_row = []
+            for col in range(15):
+                cell = self.grid[row][col]
+                if cell.letter:
+                    printed_row.append(cell.letter)
+                else:
+                    printed_row.append("_.")
+            printed_board.append(printed_row)
+        for row in printed_board:
+            print("".join(row))
 
 class ScrabbleGame:
     def __init__(self, players_count:int):

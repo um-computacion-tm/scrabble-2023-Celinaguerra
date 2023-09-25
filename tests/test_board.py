@@ -56,14 +56,29 @@ class TestBoard(unittest.TestCase):
         actually_empty = board.validate_empty()
         assert actually_empty == False
 
-    def test_place_word_empty_board_horizontal_fine(self):
+    # def test_place_word_empty_board_horizontal_fine(self):
+    #     board = Board()
+    #     word = "Facultad"
+    #     location = (7, 4)
+    #     orientation = "H"
+    #     #word_is_valid = board.validate_word_place_board(word, location, orientation)
+    #     word_is_valid = board.put_words(word, location, orientation) #es put lo mismo que validate?
+    #     assert word_is_valid == True
+
+    def test_put_words_horizontal(self):
         board = Board()
-        word = "Facultad"
-        location = (7, 4)
-        orientation = "H"
-        #word_is_valid = board.validate_word_place_board(word, location, orientation)
-        word_is_valid = board.put_words(word, location, orientation) #es put lo mismo que validate?
-        assert word_is_valid == True
+        board.put_words("hola", (5, 5), "H")
+        # ver si la palabra esta donde tiene que estar
+        for i in range(5, 9):
+            self.assertEqual(board.grid[5][i].letter, "hola"[i - 5])
+
+    def test_put_words_vertical_and_print(self):
+        board = Board()
+        board.put_words("lapiz", (4, 4), "V")
+        # ver si la palabra esta donde tiene que estar
+        for i in range(4, 8):
+            self.assertEqual(board.grid[i][4].letter, "lapiz"[i - 4])
+        board.print_board()
 
 if __name__ == "__main__":
     unittest.main

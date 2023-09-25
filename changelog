@@ -142,3 +142,11 @@
 - is_empty now working
 
 - updated put_words, still working on it
+
+##[0.0.16] - 2023-9-23
+
+### Added
+
+- updated put_words
+
+- method to print the board (still not working)
