@@ -244,6 +244,17 @@ class Board:
         for row in printed_board:
             print("".join(row))
 
+    def validate_word_place_board(self,location,orientation,word):
+        center_of_board = (7, 7)
+        for i in range(len(word)):
+            pos_x = location[0] + i if orientation == "H" else location[0] #si es h, va sumando i horizontalmente
+            pos_y = location[1] + i if orientation == "V" else location[1] # idem vertical
+            if pos_x == center_of_board[0] and pos_y == center_of_board[1]: # si x e y son 7,7
+                return True
+            else:
+                return False
+        #NO ANDAAA
+
 class ScrabbleGame:
     def __init__(self, players_count:int):
         self.board = Board()

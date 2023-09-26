@@ -143,10 +143,18 @@
 
 - updated put_words, still working on it
 
-##[0.0.16] - 2023-9-23
+##[0.0.16] - 2023-9-25
 
 ### Added
 
 - updated put_words
 
 - method to print the board (still not working)
+
+##[0.0.17] - 2023-9-26
+
+### Added
+
+- validate_word_place_board #validates if the first word stated at the center of the board (not working)
+
+- tests
