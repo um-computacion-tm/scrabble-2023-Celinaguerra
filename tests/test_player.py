@@ -1,5 +1,7 @@
 import unittest
 from game.scrabble import Player
+#clase
+from game.scrabble import Tile, BagTiles
 
 class TestPlayer(unittest.TestCase):
     def test_init(self):
