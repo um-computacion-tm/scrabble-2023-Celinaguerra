@@ -17,6 +17,12 @@ class Player:
         self.score = score
 """ 
 
+    #clase
+    def rellenar(self):
+        self.tiles += bag.take(
+            7- len(self.tiles)
+        )
+
 class Dictionary:
     def __init__(self, file_path):
         self.words = self.load_words(file_path)
@@ -238,7 +244,7 @@ class Board:
                 if cell.letter:
                     printed_row.append(cell.letter)
                 else:
-                    printed_row.append("_.")
+                    printed_row.append(". ")
             printed_board.append(printed_row)
         for row in printed_board:
             print("".join(row))
