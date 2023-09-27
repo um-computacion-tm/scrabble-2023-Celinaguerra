@@ -50,12 +50,6 @@ class TestBoard(unittest.TestCase):
         board = Board()
         assert board.is_empty == True
 
-<<<<<<< HEAD
-    # def test_board_is_not_empty(self):
-    #     board = Board()
-    #     board.grid[7][7].add_letter(Tile('C', 1))
-    #     assert board.is_empty == False
-=======
     def test_board_is_not_empty(self):
         board = Board()
         board.grid[7][7].add_letter(Tile('C', 1))
@@ -121,7 +115,6 @@ class TestBoard(unittest.TestCase):
     #     orientation = "V" # ORIGINALMENTE dceía H pero si no no pasaba por la otra palabra
     #     word_is_valid = board.validate_word_place_board(word, location, orientation)
     #     assert word_is_valid == True
->>>>>>> newdevelop
 
 if __name__ == "__main__":
     unittest.main

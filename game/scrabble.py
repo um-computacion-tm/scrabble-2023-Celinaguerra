@@ -17,12 +17,6 @@ class Player:
         self.score = score
 """ 
 
-    #clase
-    def rellenar(self):
-        self.tiles += bag.take(
-            7- len(self.tiles)
-        )
-
 class Dictionary:
     def __init__(self, file_path):
         self.words = self.load_words(file_path)
