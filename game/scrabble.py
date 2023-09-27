@@ -227,7 +227,6 @@ class Board:
         else:
             for i in range (len_word):
                 self.grid[pos_x + i][pos_y].add_letter(word[i])
-    ## VER COMO SELECCIONAR VERTICALIDAD (HACIA ARRIBA O HACIA ABAJO)
 
     def print_board(self):
         #ver como sacar el _. de donde hay letras
@@ -244,16 +243,16 @@ class Board:
         for row in printed_board:
             print("".join(row))
 
-    def validate_word_place_board(self,location,orientation,word):
+    def validate_word_place_board(self,word,location,orientation):
         center_of_board = (7, 7)
         for i in range(len(word)):
             pos_x = location[0] + i if orientation == "H" else location[0] #si es h, va sumando i horizontalmente
             pos_y = location[1] + i if orientation == "V" else location[1] # idem vertical
+            print(f"posicion ({pos_x}, {pos_y}) de letra '{word[i]}'")
             if pos_x == center_of_board[0] and pos_y == center_of_board[1]: # si x e y son 7,7
+                print ("pasa por el centro")
                 return True
-            else:
-                return False
-        #NO ANDAAA
+        return False
 
 class ScrabbleGame:
     def __init__(self, players_count:int):
