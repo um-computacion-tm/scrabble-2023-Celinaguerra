@@ -17,6 +17,11 @@ class Player:
         self.score = score
 """ 
 
+    def refill(self,bag):
+        self.tiles += bag.take(
+            7- len(self.tiles)
+        )
+
 class Dictionary:
     def __init__(self, file_path):
         self.words = self.load_words(file_path)
@@ -229,19 +234,22 @@ class Board:
                 self.grid[pos_x + i][pos_y].add_letter(word[i])
 
     def print_board(self):
-        #ver como sacar el _. de donde hay letras
-        printed_board = []
-        for row in range(15):
-            printed_row = []
-            for col in range(15):
-                cell = self.grid[row][col]
-                if cell.letter:
-                    printed_row.append(cell.letter)
+        board = ""
+        #header row
+        board += " | " + "  | ".join(str(item) for item in range(1,10)) + "  | " + " | ".join(str(item) for item in range(10,16)) + " | "
+        board += "\n   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
+        for i in range(1,15):
+            row = self.grid[i]
+            row_str = str(i) + " | "
+            for cell in row:
+                if cell.letter is None:
+                    row_str += ".  | "
                 else:
-                    printed_row.append(". ")
-            printed_board.append(printed_row)
-        for row in printed_board:
-            print("".join(row))
+                    row_str += cell.letter + "  | "
+            board += "\n" + row_str
+        board += "\n   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
+        print(board)
+        ##### ARREGLAR MAL COLOCACIÓN
 
     def validate_word_place_board(self,word,location,orientation):
         center_of_board = (7, 7)

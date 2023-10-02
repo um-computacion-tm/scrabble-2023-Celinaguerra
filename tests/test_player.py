@@ -17,5 +17,16 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(player1.set_name('celi'), 'celi')
 
 
+####
+
+    def test_refill(self):
+        #jugador con menos de 7 fichas
+        player2 = Player(id=2,name=None)
+        player2.tiles = ['A', 'B']
+        bag = BagTiles()
+        bag.take(5)
+        player2.refill(bag)
+        self.assertEqual(len(player2.tiles), 7)
+
 if __name__ == '__main__':
     unittest.main
