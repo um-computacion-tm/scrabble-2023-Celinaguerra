@@ -24,12 +24,10 @@ class TestScrabbleGame(unittest.TestCase):
         
         scrabble_game.next_turn()
         assert scrabble_game.current_player == scrabble_game.players[1]
-        
+
     def test_next_turn_when_game_is_last(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = scrabble_game.players[2]
 
         scrabble_game.next_turn()
         assert scrabble_game.current_player == scrabble_game.players[0]
-
-        

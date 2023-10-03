@@ -22,13 +22,20 @@ class Player:
             7- len(self.tiles)
         )
 
+    def has_letters(self,tiles):
+        player_bag = self.tiles
+        for tile in tiles:
+            if tile.letter not in player_bag:
+                return False
+        return True
+
 class Dictionary:
     def __init__(self, file_path):
         self.words = self.load_words(file_path)
 
     def load_words(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as file:
-            return set(word.strip() for word in file)
+            return set(word.strip().upper() for word in file)
 
     def valid_word(self, word):
         if word in self.words:
@@ -236,9 +243,18 @@ class Board:
     def print_board(self):
         board = ""
         #header row
-        board += " | " + "  | ".join(str(item) for item in range(1,10)) + "  | " + " | ".join(str(item) for item in range(10,16)) + " | "
+        board += "  | " + "  | ".join(str(item) for item in range(0,10)) + "  | " + " | ".join(str(item) for item in range(10,15)) + " | "
         board += "\n   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-        for i in range(1,15):
+        for i in range(0,10):
+            row = self.grid[i]
+            row_str = str(i) + "  | "
+            for cell in row:
+                if cell.letter is None:
+                    row_str += ".  | "
+                else:
+                    row_str += cell.letter + "  | "
+            board += "\n" + row_str
+        for i in range(10,15):
             row = self.grid[i]
             row_str = str(i) + " | "
             for cell in row:
@@ -247,9 +263,9 @@ class Board:
                 else:
                     row_str += cell.letter + "  | "
             board += "\n" + row_str
-        board += "\n   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
+        board += "\n"
         print(board)
-        ##### ARREGLAR MAL COLOCACIÓN
+
 
     def validate_word_place_board(self,word,location,orientation):
         center_of_board = (7, 7)

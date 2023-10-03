@@ -59,18 +59,17 @@ class TestBoard(unittest.TestCase):
 
     def test_put_words_horizontal(self):
         board = Board()
-        board.put_words("hola", (5, 5), "H")
+        board.put_words("HOLA", (5, 5), "H")
         # ver si la palabra esta donde tiene que estar
         for i in range(5, 9):
-            self.assertEqual(board.grid[5][i].letter, "hola"[i - 5])
+            self.assertEqual(board.grid[5][i].letter, "HOLA"[i - 5])
         board.print_board()
 
     def test_put_words_vertical_and_print(self):
         board = Board()
-        board.put_words("lapiz", (4, 4), "V")
-        # ver si la palabra esta donde tiene que estar
+        board.put_words("LAPIZ", (4, 4), "V")
         for i in range(4, 8):
-            self.assertEqual(board.grid[i][4].letter, "lapiz"[i - 4])
+            self.assertEqual(board.grid[i][4].letter, "LAPIZ"[i - 4])
         board.print_board()
 
     def test_place_word_empty_board_horizontal_fine(self):
@@ -105,17 +104,17 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == False
 
-    # def test_place_word_not_empty_board_horizontal_fine(self):
-    #     board = Board()
-    #     board.grid[7][7].add_letter(Tile('C', 1))
-    #     board.grid[8][7].add_letter(Tile('A', 1)) 
-    #     board.grid[9][7].add_letter(Tile('S', 1)) 
-    #     board.grid[10][7].add_letter(Tile('A', 1)) 
-    #     word = "Facultad"
-    #     location = (8, 6)
-    #     orientation = "V" # ORIGINALMENTE dceía H pero si no no pasaba por la otra palabra
-    #     word_is_valid = board.validate_word_place_board(word, location, orientation)
-    #     assert word_is_valid == True
+    def test_place_word_not_empty_board_horizontal_fine(self):
+        board = Board()
+        board.grid[7][7].add_letter(Tile('C', 1))
+        board.grid[8][7].add_letter(Tile('A', 1)) 
+        board.grid[9][7].add_letter(Tile('S', 1)) 
+        board.grid[10][7].add_letter(Tile('A', 1))
+        word = "FACULTAD"
+        location = (4, 7)
+        orientation = "H"
+        word_is_valid = board.validate_word_place_board(word, location, orientation)
+        assert word_is_valid == True
 
 if __name__ == "__main__":
     unittest.main
