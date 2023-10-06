@@ -17,13 +17,25 @@ class Player:
         self.score = score
 """ 
 
+    def refill(self,bag):
+        self.tiles += bag.take(
+            7- len(self.tiles)
+        )
+
+    def has_letters(self,tiles):
+        player_bag = self.tiles
+        for tile in tiles:
+            if tile.letter not in player_bag:
+                return False
+        return True
+
 class Dictionary:
     def __init__(self, file_path):
         self.words = self.load_words(file_path)
 
     def load_words(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as file:
-            return set(word.strip() for word in file)
+            return set(word.strip().upper() for word in file)
 
     def valid_word(self, word):
         if word in self.words:
@@ -152,7 +164,7 @@ class BagTiles:
         self.tiles.extend(tiles)
 
 class Cell:
-    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None):
+    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None, tile=None):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
         self.letter = letter
@@ -229,19 +241,39 @@ class Board:
                 self.grid[pos_x + i][pos_y].add_letter(word[i])
 
     def print_board(self):
-        #ver como sacar el _. de donde hay letras
-        printed_board = []
-        for row in range(15):
-            printed_row = []
-            for col in range(15):
-                cell = self.grid[row][col]
-                if cell.letter:
-                    printed_row.append(cell.letter)
+        # print('\n  |' + ''.join([f' {str(row_index).rjust(2)} ' for row_index in range(15)]))
+        # for row_index, row in enumerate(board.grid):
+        #     print(
+        #         str(row_index).rjust(2) +
+        #         '| ' +
+        #         ' '.join([repr(cell) for cell in row])
+        #     )
+
+        board = ""
+        #header row
+        board += "  | " + "  | ".join(str(item) for item in range(0,10)) + "  | " + " | ".join(str(item) for item in range(10,15)) + " | "
+        board += "\n   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
+        for i in range(0,10):
+            row = self.grid[i]
+            row_str = str(i) + "  | "
+            for cell in row:
+                if cell.letter is None:
+                    row_str += ".  | "
                 else:
-                    printed_row.append(". ")
-            printed_board.append(printed_row)
-        for row in printed_board:
-            print("".join(row))
+                    row_str += cell.letter + "  | "
+            board += "\n" + row_str
+        for i in range(10,15):
+            row = self.grid[i]
+            row_str = str(i) + " | "
+            for cell in row:
+                if cell.letter is None:
+                    row_str += ".  | "
+                else:
+                    row_str += cell.letter + "  | "
+            board += "\n" + row_str
+        board += "\n"
+        print(board)
+
 
     def validate_word_place_board(self,word,location,orientation):
         center_of_board = (7, 7)
