@@ -1,5 +1,8 @@
 import random
-
+class InvalidWordException:
+    pass
+class InvalidPlaceWordException:
+    pass
 
 class Player:
     def __init__(self, id:int, name=None):
@@ -294,6 +297,8 @@ class ScrabbleGame:
         for _ in range(players_count):
             self.players.append(Player(id=_))
         self.current_player = None
+        self.dic = Dictionary(file_path="game/list_of_words.txt")
+        self.cell = Cell()
         
     def next_turn(self):
         if self.current_player is None:
@@ -305,3 +310,28 @@ class ScrabbleGame:
         else:
             index = self.players.index(self.current_player) + 1
             self.current_player = self.players[index]
+
+    def get_player_count(self):
+        while True:
+            try:
+                player_count = int(input('cantidad de jugadores (1-3): '))
+                if player_count <= 3:
+                    break
+            except Exception as e:
+                print('ingrese un numero por favor')
+        return player_count
+
+    def play(self, word, location, orientation):
+        self.validate_word(word, location, orientation)
+        words = self.board.put_words(word, location, orientation)
+        total = self.cell.calculate_word_value(words)
+        self.players[self.current_player].score += total
+        self.next_turn()
+
+    def validate_word(self, word, location, orientation):
+        if not self.dic.valid_word(word):
+            raise InvalidWordException("Su palabra no existe en el diccionario")
+        if not self.board.validate_word_inside_board(word, location, orientation):
+            raise InvalidPlaceWordException("Su palabra excede el tablero")
+        if not self.board.validate_word_place_board(word, location, orientation):
+            raise InvalidPlaceWordException("Su palabra esta mal puesta en el tablero")
