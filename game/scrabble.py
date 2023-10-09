@@ -4,34 +4,6 @@ class InvalidWordException:
 class InvalidPlaceWordException:
     pass
 
-class Player:
-    def __init__(self, id:int, name=None):
-        self.id = id
-        bag = BagTiles()
-        self.tiles = bag.take(7)
-        self.score = 0
-        
-    def set_name(self, name):
-        self.name = name
-        return name
-
-    #conectar con calculate_word_value
-    """def score(self):
-        self.score = score
-""" 
-
-    def refill(self,bag):
-        self.tiles += bag.take(
-            7- len(self.tiles)
-        )
-
-    def has_letters(self,tiles):
-        player_bag = self.tiles
-        for tile in tiles:
-            if tile.letter not in player_bag:
-                return False
-        return True
-
 class Dictionary:
     def __init__(self, file_path):
         self.words = self.load_words(file_path)
@@ -45,6 +17,38 @@ class Dictionary:
             return True
         else:
             return False
+
+class Player:
+    def __init__(self, id:int, name=None):
+        self.id = id
+        bag = BagTiles()
+        self.tiles = bag.take(7)
+        self.score = 0
+        
+    def set_name(self, name):
+        self.name = name
+        return name
+
+    #conectar con calculate_word_value
+    # def score(self):
+    #     self.score = score
+
+    def refill(self,bag):
+        self.tiles += bag.take(
+            7- len(self.tiles)
+        )
+
+    def has_letters(self,tiles):
+        player_bag = self.tiles
+        for tile in tiles:
+            if tile in player_bag:
+                BagTiles.tiles.remove(tile)
+            else:
+                return False
+        return True
+    
+    #NO ANDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
 
 class Tile:
     def __init__(self,letter,value):
