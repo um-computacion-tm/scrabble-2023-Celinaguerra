@@ -1,4 +1,6 @@
 import random
+from collections import Counter
+
 class InvalidWordException:
     pass
 class InvalidPlaceWordException:
@@ -17,38 +19,6 @@ class Dictionary:
             return True
         else:
             return False
-
-class Player:
-    def __init__(self, id:int, name=None):
-        self.id = id
-        bag = BagTiles()
-        self.tiles = bag.take(7)
-        self.score = 0
-        
-    def set_name(self, name):
-        self.name = name
-        return name
-
-    #conectar con calculate_word_value
-    # def score(self):
-    #     self.score = score
-
-    def refill(self,bag):
-        self.tiles += bag.take(
-            7- len(self.tiles)
-        )
-
-    def has_letters(self,tiles):
-        player_bag = self.tiles
-        for tile in tiles:
-            if tile in player_bag:
-                BagTiles.tiles.remove(tile)
-            else:
-                return False
-        return True
-    
-    #NO ANDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
 
 class Tile:
     def __init__(self,letter,value):
@@ -201,6 +171,42 @@ class Cell:
         word_value *= word_multiplier
         return word_value
 
+class Player:
+    def __init__(self):
+        self.name = ""
+        self.tiles = []
+        self.score = 0
+
+    def set_name(self,name):
+        self.name = name
+    
+    def get_name(self):
+        return self.name
+
+    def take_tiles(self, bag:BagTiles, amount):
+        self.tiles.extend(bag.take(amount))
+    
+    def increase_score(self,amount):
+        self.score += amount
+
+    def get_score(self):
+        return self.score
+
+    def refill(self,bag:BagTiles):
+        self.tiles += bag.take(
+            7- len(self.tiles)
+        )
+
+    def has_letters(self, tiles=[]):
+        letras_jugador = [tile.letter for tile in self.tiles]
+        letras_palabra = [tile.letter for tile in tiles]
+        letras_necesarias = Counter(letras_palabra)
+        for letra, cantidad in letras_necesarias.items():
+            if letras_jugador.count(letra) < cantidad:
+                return False
+        return True
+
+
 class Board:
     def __init__(self):
         self.is_empty = True
@@ -299,7 +305,7 @@ class ScrabbleGame:
         self.bag_tiles = BagTiles()
         self.players:list[Player] = []
         for _ in range(players_count):
-            self.players.append(Player(id=_))
+            self.players.append(Player())
         self.current_player = None
         self.dic = Dictionary(file_path="game/list_of_words.txt")
         self.cell = Cell()
@@ -322,7 +328,7 @@ class ScrabbleGame:
                 if player_count <= 3:
                     break
             except Exception as e:
-                print('ingrese un numero por favor')
+                print('ingrese un numero válido por favor')
         return player_count
 
     def play(self, word, location, orientation):
@@ -332,10 +338,12 @@ class ScrabbleGame:
         self.players[self.current_player].score += total
         self.next_turn()
 
-    def validate_word(self, word, location, orientation):
-        if not self.dic.valid_word(word):
-            raise InvalidWordException("Su palabra no existe en el diccionario")
-        if not self.board.validate_word_inside_board(word, location, orientation):
-            raise InvalidPlaceWordException("Su palabra excede el tablero")
-        if not self.board.validate_word_place_board(word, location, orientation):
-            raise InvalidPlaceWordException("Su palabra esta mal puesta en el tablero")
+    # def validate_word_dictionary(self, word, location, orientation):
+    #     if not self.dic.valid_word(word):
+    #         raise InvalidWordException("Su palabra no existe en el diccionario")
+    #     if not self.board.validate_word_inside_board(word, location, orientation):
+    #         raise InvalidPlaceWordException("Su palabra excede el tablero")
+    #     if not self.board.validate_word_place_board(word, location, orientation):
+    #         raise InvalidPlaceWordException("Su palabra esta mal puesta en el tablero")
+
+    #quizás lo borro, ya existe algo similar en DIctionary
