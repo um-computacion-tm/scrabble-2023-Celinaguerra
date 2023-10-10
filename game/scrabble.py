@@ -1,21 +1,22 @@
 import random
+from collections import Counter
 
+class InvalidWordException:
+    pass
+class InvalidPlaceWordException:
+    pass
 
-class Player:
-    def __init__(self, id:int, name=None):
-        self.id = id
-        bag = BagTiles()
-        self.tiles = bag.take(7)
-        self.score = 0
-        
-    def set_name(self, name):
-        self.name = name
-        return name
+    def refill(self,bag):
+        self.tiles += bag.take(
+            7- len(self.tiles)
+        )
 
-    #conectar con calculate_word_value
-    """def score(self):
-        self.score = score
-""" 
+    def has_letters(self,tiles):
+        player_bag = self.tiles
+        for tile in tiles:
+            if tile.letter not in player_bag:
+                return False
+        return True
 
 class Dictionary:
     def __init__(self, file_path):
@@ -23,7 +24,7 @@ class Dictionary:
 
     def load_words(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as file:
-            return set(word.strip() for word in file)
+            return set(word.strip().upper() for word in file)
 
     def valid_word(self, word):
         if word in self.words:
@@ -152,7 +153,7 @@ class BagTiles:
         self.tiles.extend(tiles)
 
 class Cell:
-    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None):
+    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None, tile=None):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
         self.letter = letter
@@ -181,6 +182,42 @@ class Cell:
                 letter.multiplier_type = None
         word_value *= word_multiplier
         return word_value
+
+class Player:
+    def __init__(self):
+        self.name = ""
+        self.tiles = []
+        self.score = 0
+
+    def set_name(self,name):
+        self.name = name
+    
+    def get_name(self):
+        return self.name
+
+    def take_tiles(self, bag:BagTiles, amount):
+        self.tiles.extend(bag.take(amount))
+    
+    def increase_score(self,amount):
+        self.score += amount
+
+    def get_score(self):
+        return self.score
+
+    def refill(self,bag:BagTiles):
+        self.tiles += bag.take(
+            7- len(self.tiles)
+        )
+
+    def has_letters(self, tiles=[]):
+        letras_jugador = [tile.letter for tile in self.tiles]
+        letras_palabra = [tile.letter for tile in tiles]
+        letras_necesarias = Counter(letras_palabra)
+        for letra, cantidad in letras_necesarias.items():
+            if letras_jugador.count(letra) < cantidad:
+                return False
+        return True
+
 
 class Board:
     def __init__(self):
@@ -229,19 +266,39 @@ class Board:
                 self.grid[pos_x + i][pos_y].add_letter(word[i])
 
     def print_board(self):
-        #ver como sacar el _. de donde hay letras
-        printed_board = []
-        for row in range(15):
-            printed_row = []
-            for col in range(15):
-                cell = self.grid[row][col]
-                if cell.letter:
-                    printed_row.append(cell.letter)
+        # print('\n  |' + ''.join([f' {str(row_index).rjust(2)} ' for row_index in range(15)]))
+        # for row_index, row in enumerate(board.grid):
+        #     print(
+        #         str(row_index).rjust(2) +
+        #         '| ' +
+        #         ' '.join([repr(cell) for cell in row])
+        #     )
+
+        board = ""
+        #header row
+        board += "  | " + "  | ".join(str(item) for item in range(0,10)) + "  | " + " | ".join(str(item) for item in range(10,15)) + " | "
+        board += "\n   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
+        for i in range(0,10):
+            row = self.grid[i]
+            row_str = str(i) + "  | "
+            for cell in row:
+                if cell.letter is None:
+                    row_str += ".  | "
                 else:
-                    printed_row.append(". ")
-            printed_board.append(printed_row)
-        for row in printed_board:
-            print("".join(row))
+                    row_str += cell.letter + "  | "
+            board += "\n" + row_str
+        for i in range(10,15):
+            row = self.grid[i]
+            row_str = str(i) + " | "
+            for cell in row:
+                if cell.letter is None:
+                    row_str += ".  | "
+                else:
+                    row_str += cell.letter + "  | "
+            board += "\n" + row_str
+        board += "\n"
+        print(board)
+
 
     def validate_word_place_board(self,word,location,orientation):
         center_of_board = (7, 7)
@@ -260,8 +317,10 @@ class ScrabbleGame:
         self.bag_tiles = BagTiles()
         self.players:list[Player] = []
         for _ in range(players_count):
-            self.players.append(Player(id=_))
+            self.players.append(Player())
         self.current_player = None
+        self.dic = Dictionary(file_path="game/list_of_words.txt")
+        self.cell = Cell()
         
     def next_turn(self):
         if self.current_player is None:
@@ -273,3 +332,30 @@ class ScrabbleGame:
         else:
             index = self.players.index(self.current_player) + 1
             self.current_player = self.players[index]
+
+    def get_player_count(self):
+        while True:
+            try:
+                player_count = int(input('cantidad de jugadores (1-3): '))
+                if player_count <= 3:
+                    break
+            except Exception as e:
+                print('ingrese un numero válido por favor')
+        return player_count
+
+    def play(self, word, location, orientation):
+        self.validate_word(word, location, orientation)
+        words = self.board.put_words(word, location, orientation)
+        total = self.cell.calculate_word_value(words)
+        self.players[self.current_player].score += total
+        self.next_turn()
+
+    # def validate_word_dictionary(self, word, location, orientation):
+    #     if not self.dic.valid_word(word):
+    #         raise InvalidWordException("Su palabra no existe en el diccionario")
+    #     if not self.board.validate_word_inside_board(word, location, orientation):
+    #         raise InvalidPlaceWordException("Su palabra excede el tablero")
+    #     if not self.board.validate_word_place_board(word, location, orientation):
+    #         raise InvalidPlaceWordException("Su palabra esta mal puesta en el tablero")
+
+    #quizás lo borro, ya existe algo similar en DIctionary
