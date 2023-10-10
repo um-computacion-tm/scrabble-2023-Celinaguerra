@@ -1,3 +1,29 @@
+##[0.0.24] - 2023-10-10
+
+### Updated
+
+- player class and tests, coverage and count_players
+
+- problem = patch not defined
+
+##[0.0.23] - 2023-10-8
+
+### Updated
+
+- refill, has_letters still not working
+
+##[0.0.22] - 2023-10-7
+
+### Added
+
+- player count, play, validate word in scrabblegame. Not working
+
+##[0.0.21] - 2023-10-6
+
+### Updated
+
+- Main, test, not working
+
 ##[0.0.20] - 2023-10-3
 
 ### Updated

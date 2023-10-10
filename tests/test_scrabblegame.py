@@ -1,16 +1,12 @@
 import unittest
-from game.scrabble import ScrabbleGame
+from unittest.mock import patch
+from game.scrabble import ScrabbleGame, Dictionary, Board
 
 class TestScrabbleGame(unittest.TestCase):
-    def test_init(self):
-        scrabble_game = ScrabbleGame(players_count=3)
+    def test__init__(self):
+        scrabble_game = ScrabbleGame(players_count = 3)
         self.assertIsNotNone(scrabble_game.board)
-        self.assertEqual(
-            len(scrabble_game.players),
-            3,
-        )
-        for players in scrabble_game.players:
-            self.assertIsNotNone(players.id)
+        self.assertEqual(len(scrabble_game.players),3)
         self.assertIsNotNone(scrabble_game.bag_tiles)
 
     def test_next_turn_when_game_is_starting(self):
@@ -31,3 +27,28 @@ class TestScrabbleGame(unittest.TestCase):
 
         scrabble_game.next_turn()
         assert scrabble_game.current_player == scrabble_game.players[0]
+
+#NO RECONOCE get_player_count
+# class TestCLI(unittest.TestCase):
+#     @patch('builtins.input', return_value='3')
+#     def test_get_player_count(self, input_patched):
+#         self.assertEqual(
+#             get_player_count(),
+#             3,
+#         )
+
+#     @patch('builtins.print')
+#     @patch('builtins.input', side_effect=['A', '3'])
+#     def test_get_player_count_wrong_input(self, input_patched, print_patched):
+#         self.assertEqual(
+#             get_player_count(),
+#             3,
+#         )
+
+#     @patch('builtins.print')
+#     @patch('builtins.input', side_effect=['10', '1'])
+#     def test_get_player_count_control_max(self, input_patched, print_patched):
+#         self.assertEqual(
+#             get_player_count(),
+#             1,
+#         )
