@@ -6,17 +6,6 @@ class InvalidWordException:
 class InvalidPlaceWordException:
     pass
 
-    def refill(self,bag):
-        self.tiles += bag.take(
-            7- len(self.tiles)
-        )
-
-    def has_letters(self,tiles):
-        player_bag = self.tiles
-        for tile in tiles:
-            if tile.letter not in player_bag:
-                return False
-        return True
 
 class Dictionary:
     def __init__(self, file_path):
