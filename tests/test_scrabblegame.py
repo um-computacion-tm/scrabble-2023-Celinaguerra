@@ -1,6 +1,5 @@
 import unittest
-from unittest.mock import patch
-from game.scrabble import ScrabbleGame, Dictionary, Board
+from game.scrabble import ScrabbleGame
 
 class TestScrabbleGame(unittest.TestCase):
     def test__init__(self):
@@ -28,27 +27,4 @@ class TestScrabbleGame(unittest.TestCase):
         scrabble_game.next_turn()
         assert scrabble_game.current_player == scrabble_game.players[0]
 
-#NO RECONOCE get_player_count
-# class TestCLI(unittest.TestCase):
-#     @patch('builtins.input', return_value='3')
-#     def test_get_player_count(self, input_patched):
-#         self.assertEqual(
-#             get_player_count(),
-#             3,
-#         )
 
-#     @patch('builtins.print')
-#     @patch('builtins.input', side_effect=['A', '3'])
-#     def test_get_player_count_wrong_input(self, input_patched, print_patched):
-#         self.assertEqual(
-#             get_player_count(),
-#             3,
-#         )
-
-#     @patch('builtins.print')
-#     @patch('builtins.input', side_effect=['10', '1'])
-#     def test_get_player_count_control_max(self, input_patched, print_patched):
-#         self.assertEqual(
-#             get_player_count(),
-#             1,
-#         )

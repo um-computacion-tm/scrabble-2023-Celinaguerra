@@ -75,5 +75,8 @@ class TestPlayer(unittest.TestCase):
         is_valid = player.has_letters(tiles)
         self.assertEqual(is_valid, False)
 
+
+
+
 if __name__ == '__main__':
     unittest.main

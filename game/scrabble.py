@@ -322,16 +322,6 @@ class ScrabbleGame:
             index = self.players.index(self.current_player) + 1
             self.current_player = self.players[index]
 
-    def get_player_count(self):
-        while True:
-            try:
-                player_count = int(input('cantidad de jugadores (1-3): '))
-                if player_count <= 3:
-                    break
-            except Exception as e:
-                print('ingrese un numero válido por favor')
-        return player_count
-
     def play(self, word, location, orientation):
         self.validate_word(word, location, orientation)
         words = self.board.put_words(word, location, orientation)
