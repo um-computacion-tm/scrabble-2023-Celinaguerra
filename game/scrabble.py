@@ -288,6 +288,7 @@ class Board:
         board += "\n"
         print(board)
 
+#mover al cliente
 
     def validate_word_place_board(self,word,location,orientation):
         center_of_board = (7, 7)
