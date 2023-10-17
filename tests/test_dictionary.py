@@ -1,5 +1,5 @@
 import unittest
-from game.scrabble import Dictionary
+from game.dictionary import Dictionary
 
 class TestDictionary(unittest.TestCase):
     def test_word_in_dictionary(self):

@@ -63,14 +63,12 @@ class TestBoard(unittest.TestCase):
         # ver si la palabra esta donde tiene que estar
         for i in range(5, 9):
             self.assertEqual(board.grid[5][i].letter, "HOLA"[i - 5])
-        board.print_board()
 
     def test_put_words_vertical_and_print(self):
         board = Board()
         board.put_words("LAPIZ", (4, 4), "V")
         for i in range(4, 8):
             self.assertEqual(board.grid[i][4].letter, "LAPIZ"[i - 4])
-        board.print_board()
 
     def test_place_word_empty_board_horizontal_fine(self):
         board = Board()
