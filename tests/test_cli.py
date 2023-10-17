@@ -1,4 +1,4 @@
-from game.client import *
+from game.cli import *
 from unittest.mock import patch
 import unittest
 

@@ -6,21 +6,6 @@ class InvalidWordException:
 class InvalidPlaceWordException:
     pass
 
-
-class Dictionary:
-    def __init__(self, file_path):
-        self.words = self.load_words(file_path)
-
-    def load_words(self, file_path):
-        with open(file_path, 'r', encoding='utf-8') as file:
-            return set(word.strip().upper() for word in file)
-
-    def valid_word(self, word):
-        if word in self.words:
-            return True
-        else:
-            return False
-
 class Tile:
     def __init__(self,letter,value):
         self.letter = letter
@@ -254,42 +239,6 @@ class Board:
             for i in range (len_word):
                 self.grid[pos_x + i][pos_y].add_letter(word[i])
 
-    def print_board(self):
-        # print('\n  |' + ''.join([f' {str(row_index).rjust(2)} ' for row_index in range(15)]))
-        # for row_index, row in enumerate(board.grid):
-        #     print(
-        #         str(row_index).rjust(2) +
-        #         '| ' +
-        #         ' '.join([repr(cell) for cell in row])
-        #     )
-
-        board = ""
-        #header row
-        board += "  | " + "  | ".join(str(item) for item in range(0,10)) + "  | " + " | ".join(str(item) for item in range(10,15)) + " | "
-        board += "\n   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-        for i in range(0,10):
-            row = self.grid[i]
-            row_str = str(i) + "  | "
-            for cell in row:
-                if cell.letter is None:
-                    row_str += ".  | "
-                else:
-                    row_str += cell.letter + "  | "
-            board += "\n" + row_str
-        for i in range(10,15):
-            row = self.grid[i]
-            row_str = str(i) + " | "
-            for cell in row:
-                if cell.letter is None:
-                    row_str += ".  | "
-                else:
-                    row_str += cell.letter + "  | "
-            board += "\n" + row_str
-        board += "\n"
-        print(board)
-
-#mover al cliente
-
     def validate_word_place_board(self,word,location,orientation):
         center_of_board = (7, 7)
         for i in range(len(word)):
@@ -300,42 +249,3 @@ class Board:
                 print ("pasa por el centro")
                 return True
         return False
-
-class ScrabbleGame:
-    def __init__(self, players_count:int):
-        self.board = Board()
-        self.bag_tiles = BagTiles()
-        self.players:list[Player] = []
-        for _ in range(players_count):
-            self.players.append(Player())
-        self.current_player = None
-        self.dic = Dictionary(file_path="game/list_of_words.txt")
-        self.cell = Cell()
-        
-    def next_turn(self):
-        if self.current_player is None:
-            self.current_player = self.players[0]
-
-        elif self.current_player == self.players[-1]:
-            self.current_player = self.players[0]
-        
-        else:
-            index = self.players.index(self.current_player) + 1
-            self.current_player = self.players[index]
-
-    def play(self, word, location, orientation):
-        self.validate_word(word, location, orientation)
-        words = self.board.put_words(word, location, orientation)
-        total = self.cell.calculate_word_value(words)
-        self.players[self.current_player].score += total
-        self.next_turn()
-
-    # def validate_word_dictionary(self, word, location, orientation):
-    #     if not self.dic.valid_word(word):
-    #         raise InvalidWordException("Su palabra no existe en el diccionario")
-    #     if not self.board.validate_word_inside_board(word, location, orientation):
-    #         raise InvalidPlaceWordException("Su palabra excede el tablero")
-    #     if not self.board.validate_word_place_board(word, location, orientation):
-    #         raise InvalidPlaceWordException("Su palabra esta mal puesta en el tablero")
-
-    #quizás lo borro, ya existe algo similar en DIctionary
