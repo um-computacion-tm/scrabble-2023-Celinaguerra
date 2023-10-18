@@ -1,5 +1,5 @@
 import unittest
-from game.scrabble import ScrabbleGame
+from game.scrabblegame import ScrabbleGame
 
 class TestScrabbleGame(unittest.TestCase):
     def test__init__(self):
@@ -26,5 +26,3 @@ class TestScrabbleGame(unittest.TestCase):
 
         scrabble_game.next_turn()
         assert scrabble_game.current_player == scrabble_game.players[0]
-
-
