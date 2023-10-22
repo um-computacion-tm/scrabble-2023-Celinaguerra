@@ -127,7 +127,7 @@ class BagTiles:
         self.tiles.extend(tiles)
 
 class Cell:
-    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None, tile=None):
+    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
         self.letter = letter
@@ -136,26 +136,36 @@ class Cell:
     def add_letter(self, letter:Tile):
         self.letter = letter
     
-    def calculate_value(self):
+    def calculate_letter_value(self):
         if self.letter is None:
             return 0
         if self.multiplier_type == 'letter':
-            value = self.letter.value * self.multiplier
-            self.multiplier_type = None
-            return value
+            return self.letter.value * self.multiplier
         else:
             return self.letter.value
     
     def calculate_word_value(self,word):
-        word_value = 0
+        total_value = 0
         word_multiplier = 1
-        for letter in word:
-            word_value += letter.calculate_value()
-            if letter.multiplier_type == 'word':
-                word_multiplier = letter.multiplier
-                letter.multiplier_type = None
-        word_value *= word_multiplier
-        return word_value
+        
+        # for letter in word:
+        #     total_value += letter.calculate_letter_value()
+        #     if letter.multiplier_type == 'word':
+        #         word_multiplier = letter.multiplier
+        #         letter.multiplier_type = None
+        # total_value *= word_multiplier
+        # return total_value
+
+        for self in word:
+            if self.multiplier_type == 'letter':
+                total_value += self.calculate_letter_value()
+            if self.multiplier_type == 'word':
+                total_value += self.calculate_letter_value()
+                word_multiplier *= self.multiplier
+            else:
+                total_value += self.letter.value
+        total_value *= word_multiplier
+        return total_value
 
 class Player:
     def __init__(self):
@@ -221,12 +231,6 @@ class Board:
                 return False
             else:
                 return True
-
-    def get_words():
-        '''
-        Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion y orientacion 
-        validar palabras (unir al dic)
-        '''
 
     def put_words(self, word, location, orientation):
         len_word = len(word)

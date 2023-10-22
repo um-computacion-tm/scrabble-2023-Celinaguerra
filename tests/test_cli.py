@@ -1,4 +1,5 @@
 from game.cli import *
+from game.scrabble import Board
 from unittest.mock import patch
 import unittest
 
@@ -39,6 +40,10 @@ class TestCLI(unittest.TestCase):
             1,
         )
 
+
+    #### ver si anda
+    def test_print_board(self):
+        print_board(self)
 
 if __name__ == '__main__':
     unittest.main()

@@ -15,7 +15,7 @@ class TestCell(unittest.TestCase):
         )
         self.assertIsNone(cell.letter)
         self.assertEqual(
-            cell.calculate_value(),
+            cell.calculate_letter_value(),
             0,
         )
 
@@ -32,7 +32,7 @@ class TestCell(unittest.TestCase):
         letter = Tile(letter = 'p', value = 3)
         cell.add_letter(letter = letter)
         self.assertEqual(
-            cell.calculate_value(), 
+            cell.calculate_letter_value(), 
             6)
 
     def test_cell_multiplier_word(self):
@@ -40,14 +40,14 @@ class TestCell(unittest.TestCase):
         letter = Tile(letter = 'p', value = 3)
         cell.add_letter(letter=letter)
         self.assertEqual(
-            cell.calculate_value(),
+            cell.calculate_letter_value(),
             3,
         )
 
     def test_with_letter_multiplier(self):
         cell = Cell(multiplier=None, multiplier_type='')
         word = [
-            Cell(letter=Tile('C', 1)),
+            Cell(letter=Tile('C', 3)),
             Cell(letter=Tile('A', 1)),
             Cell(
                 letter=Tile('S', 2),
@@ -57,7 +57,7 @@ class TestCell(unittest.TestCase):
             Cell(letter=Tile('A', 1)),
         ]
         value = cell.calculate_word_value(word)
-        self.assertEqual(value,7)
+        self.assertEqual(value,9)
 
     def test_with_word_multiplier(self):
         cell = Cell(multiplier=None, multiplier_type='')

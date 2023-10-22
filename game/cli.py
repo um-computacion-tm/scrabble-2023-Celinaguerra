@@ -1,4 +1,5 @@
 from game.scrabblegame import ScrabbleGame
+from game.scrabble import Board, Cell
 
     # def main():
     #     player_count = int(input('cantidad de jugadores'))
@@ -29,11 +30,16 @@ def get_player_count():
     return player_count
 
 def print_board(self):
+    self.grid = [
+            [Cell(1,'letter') for _ in range (15) ]
+            for _ in range (15)
+        ]
     board = ""
+    board += "\n"
     #header row
-    board += "  | " + "  | ".join(str(item) for item in range(0,10)) + "  | " + " | ".join(str(item) for item in range(10,15)) + " | "
+    board += "   | " + "  | ".join(str(item) for item in range(0,10)) + "  | " + " | ".join(str(item) for item in range(10,15)) + " | "
     board += "\n   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
-    for i in range(0,10):
+    for i in range(0,15):
         row = self.grid[i]
         row_str = str(i) + "  | "
         for cell in row:
@@ -42,6 +48,21 @@ def print_board(self):
             else:
                 row_str += cell.letter + "  | "
         board += "\n" + row_str
+    second_part_print(self)
+    # for i in range(10,15):
+    #     row = self.grid[i]
+    #     row_str = str(i) + " | "
+    #     for cell in row:
+    #         if cell.letter is None:
+    #             row_str += ".  | "
+    #         else:
+    #             row_str += cell.letter + "  | "
+    #     board += "\n" + row_str
+    board += "\n"
+    print(board)
+
+def second_part_print(self):
+    board = ''
     for i in range(10,15):
         row = self.grid[i]
         row_str = str(i) + " | "
@@ -51,5 +72,3 @@ def print_board(self):
             else:
                 row_str += cell.letter + "  | "
         board += "\n" + row_str
-    board += "\n"
-    print(board)
