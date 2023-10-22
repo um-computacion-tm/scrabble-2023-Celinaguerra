@@ -1,5 +1,6 @@
 from game.scrabblegame import ScrabbleGame
-from game.scrabble import Board, Cell
+from game.scrabble import Cell
+from game.board import Board
 
     # def main():
     #     player_count = int(input('cantidad de jugadores'))

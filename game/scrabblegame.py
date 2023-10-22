@@ -1,5 +1,7 @@
 from game.dictionary import Dictionary
-from game.scrabble import BagTiles, Player, Board, Cell
+from game.scrabble import BagTiles, Cell
+from game.board import Board
+from game.player import Player
 
 class ScrabbleGame:
     def __init__(self, players_count:int):

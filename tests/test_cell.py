@@ -50,14 +50,14 @@ class TestCell(unittest.TestCase):
             Cell(letter=Tile('C', 3)),
             Cell(letter=Tile('A', 1)),
             Cell(
-                letter=Tile('S', 2),
+                letter=Tile('S', 1),
                 multiplier=2,
                 multiplier_type='letter',
             ),
             Cell(letter=Tile('A', 1)),
         ]
         value = cell.calculate_word_value(word)
-        self.assertEqual(value,9)
+        self.assertEqual(value,7)
 
     def test_with_word_multiplier(self):
         cell = Cell(multiplier=None, multiplier_type='')

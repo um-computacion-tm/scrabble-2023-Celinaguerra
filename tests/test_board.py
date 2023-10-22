@@ -1,5 +1,6 @@
 import unittest
-from game.scrabble import Board, Tile
+from game.scrabble import Tile
+from game.board import Board, TW, TL, DW, DL
 
 class TestBoard(unittest.TestCase):
     def test__init__(self):
@@ -113,6 +114,29 @@ class TestBoard(unittest.TestCase):
         orientation = "H"
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == True
+
+    def test_multipliers_placement(self):
+        board = Board()
+
+        for location in TW:
+            cell = board.grid[location[0]][location[1]]
+            self.assertEqual(cell.multiplier_type, 'word')
+            self.assertEqual(cell.multiplier, 3)
+
+        for location in DW:
+            cell = board.grid[location[0]][location[1]]
+            self.assertEqual(cell.multiplier_type, 'word')
+            self.assertEqual(cell.multiplier, 2)
+
+        for location in TL:
+            cell = board.grid[location[0]][location[1]]
+            self.assertEqual(cell.multiplier_type, 'letter')
+            self.assertEqual(cell.multiplier, 3)
+
+        for location in DL:
+            cell = board.grid[location[0]][location[1]]
+            self.assertEqual(cell.multiplier_type, 'letter')
+            self.assertEqual(cell.multiplier, 2)
 
 if __name__ == "__main__":
     unittest.main

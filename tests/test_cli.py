@@ -1,5 +1,5 @@
 from game.cli import *
-from game.scrabble import Board
+from game.board import Board
 from unittest.mock import patch
 import unittest
 
