@@ -1,4 +1,6 @@
 from game.scrabble import Cell
+class OutOfBoard(Exception):
+    pass
 
 TW = ((0, 0), (7, 0), (14, 0), (0, 7), (14, 7), (0, 14), (7, 14), (14, 14))
 DW = ((1, 1), (2, 2), (3, 3), (4, 4), (1, 13), (2, 12), (3, 11), (4, 10), (13, 1), (12, 2), (11, 3), (10, 4), (13, 13), (12, 12), (11, 11), (10, 10))
@@ -19,21 +21,6 @@ class Board:
             self.is_empty = False
         return self.is_empty
 
-    def validate_word_inside_board(self, word, location, orientation):
-        len_word = len(word)
-        pos_x = location[0]
-        pos_y = location[1]
-
-        if orientation == 'H':
-            if pos_x + len_word > 15:
-                return False
-            else:
-                return True
-        elif orientation == 'V':
-            if pos_y + len_word > 15:
-                return False
-            else:
-                return True
 
     def put_words(self, word, location, orientation):
         len_word = len(word)
@@ -45,6 +32,22 @@ class Board:
         else:
             for i in range (len_word):
                 self.grid[pos_x + i][pos_y].add_letter(word[i])
+
+    def validate_word_inside_board(self, word, location, orientation):
+        len_word = len(word)
+        pos_x = location[0]
+        pos_y = location[1]
+
+        if orientation == 'H':
+            if pos_x + len_word > 15:
+                raise OutOfBoard("The word you picked is outside the board")
+            else:
+                return True
+        elif orientation == 'V':
+            if pos_y + len_word > 15:
+                raise OutOfBoard("The word you picked is outside the board")
+            else:
+                return True
 
     def validate_word_place_board(self,word,location,orientation):
         center_of_board = (7, 7)

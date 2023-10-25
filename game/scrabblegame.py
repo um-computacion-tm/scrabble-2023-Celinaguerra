@@ -7,20 +7,19 @@ class ScrabbleGame:
     def __init__(self, players_count:int):
         self.board = Board()
         self.bag_tiles = BagTiles()
-        self.players:list[Player] = []
+        self.players = []
         for _ in range(players_count):
             self.players.append(Player())
         self.current_player = None
         self.dic = Dictionary(file_path="game/list_of_words.txt")
         self.cell = Cell()
+        self.current_status = None
         
     def next_turn(self):
         if self.current_player is None:
             self.current_player = self.players[0]
-
         elif self.current_player == self.players[-1]:
             self.current_player = self.players[0]
-        
         else:
             index = self.players.index(self.current_player) + 1
             self.current_player = self.players[index]
@@ -31,6 +30,31 @@ class ScrabbleGame:
         total = self.cell.calculate_word_value(words)
         self.players[self.current_player].score += total
         self.next_turn()
+
+    def show_score(self):
+        player_scores = {}
+        for player in self.players:
+            player_scores[player.get_name()] = player.get_score()
+        return player_scores
+
+    def play_turn(self):
+        #jugador tiene x letras
+        #da una palabra
+        #verificar si se puede formar con las letras
+        #verificar si existe
+        #si es el primer turno -> que esté en el (7,7)
+        #verificar si entra en el tablero
+        #quitar letras (ver si se rellena la mano despues ahora o en el prox turno)
+        #dar puntaje (chequear palabras alrededor)
+        #pasar turno
+        pass
+
+
+    def playing(self):
+        self.current_status = 'playing'
+
+    def stopped_playing(self):
+        self.current_status = 'not playing'
 
     # def validate_word_dictionary(self, word, location, orientation):
     #     if not self.dic.valid_word(word):

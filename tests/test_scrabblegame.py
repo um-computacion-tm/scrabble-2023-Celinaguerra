@@ -26,3 +26,8 @@ class TestScrabbleGame(unittest.TestCase):
 
         scrabble_game.next_turn()
         assert scrabble_game.current_player == scrabble_game.players[0]
+
+    def test_show_scores(self):
+        scrabble_game = ScrabbleGame(players_count=1)
+        scrabble_game.players[0].set_name('Celi')
+        self.assertEqual(scrabble_game.show_score(), {'Celi':0})

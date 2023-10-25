@@ -1,6 +1,6 @@
 import unittest
 from game.scrabble import Tile
-from game.board import Board, TW, TL, DW, DL
+from game.board import Board, TW, TL, DW, DL, OutOfBoard
 
 class TestBoard(unittest.TestCase):
     def test__init__(self):
@@ -16,7 +16,7 @@ class TestBoard(unittest.TestCase):
 
     def test_word_inside_board_x(self):
         board = Board()
-        word = 'facultad'
+        word = 'FACULTAD'
         location = (5,10)
         orientation = 'H'
         word_is_valid = board.validate_word_inside_board(word, location, orientation)
@@ -36,16 +36,22 @@ class TestBoard(unittest.TestCase):
         word = 'jalapeño'
         location = (10,10)
         orientation = 'H'
-        word_is_valid = board.validate_word_inside_board(word,location,orientation)
-        assert word_is_valid == False
+        try:
+            board.validate_word_inside_board(word,location,orientation)
+            assert False
+        except OutOfBoard as e:
+            assert str(e)
 
     def test_word_outside_board_y(self):
         board = Board()
         word = 'mantis'
         location = (1,14)
         orientation = 'V'
-        word_is_valid = board.validate_word_inside_board(word,location,orientation)
-        assert word_is_valid == False
+        try:
+            board.validate_word_inside_board(word,location,orientation)
+            assert False
+        except OutOfBoard as e:
+            assert str(e)
 
     def test_board_is_empty(self):
         board = Board()
