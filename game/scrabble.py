@@ -1,5 +1,4 @@
 import random
-from collections import Counter
 
 class InvalidWordException:
     pass
@@ -48,6 +47,7 @@ class BagTiles:
             Tile('L',1),
             Tile('L',1),
             Tile('L',1),
+            Tile('L',1),
             Tile('N',1),
             Tile('N',1),
             Tile('N',1),
@@ -91,6 +91,7 @@ class BagTiles:
             Tile('G',2),
             Tile('B',3),
             Tile('B',3),
+            Tile('C',3),
             Tile('C',3),
             Tile('C',3),
             Tile('C',3),
@@ -102,18 +103,16 @@ class BagTiles:
             Tile('F',4),
             Tile('H',4),
             Tile('H',4),
+            Tile('H',4),
             Tile('V',4),
             Tile('Y',4),
-            Tile('Ch',5),
             Tile('Q',5),
             Tile('J',8),
-            Tile('LL',8),
             Tile('Ñ',8),
-            Tile('RR',8),
             Tile('X',8),
             Tile('Z',10),
-            Tile('#',0),
-            Tile('#',0),
+            Tile('#',None),
+            Tile('#',None),
         ]
         random.shuffle(self.tiles)
 
@@ -126,8 +125,22 @@ class BagTiles:
     def put(self,tiles):
         self.tiles.extend(tiles)
 
+    def get_tile_value(self, letter):
+        for tile in self.tiles:
+            if tile.letter == letter:
+                return tile.value
+
+    def joker_value(self):
+        if "#" in [tile.letter for tile in self.tiles]:
+            joker_val = input("Please enter the letter value of the # tile: ")
+            for tile in self.tiles:
+                if tile.letter == '#':
+                    tile.value = self.get_tile_value(joker_val.upper())
+                    break
+
+
 class Cell:
-    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None, tile=None):
+    def __init__(self, multiplier=1, multiplier_type='', letter=None, word=None):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
         self.letter = letter
@@ -136,116 +149,25 @@ class Cell:
     def add_letter(self, letter:Tile):
         self.letter = letter
     
-    def calculate_value(self):
+    def calculate_letter_value(self):
         if self.letter is None:
             return 0
         if self.multiplier_type == 'letter':
-            value = self.letter.value * self.multiplier
-            self.multiplier_type = None
-            return value
+            return self.letter.value * self.multiplier
         else:
             return self.letter.value
     
     def calculate_word_value(self,word):
-        word_value = 0
+        total_value = 0
         word_multiplier = 1
-        for letter in word:
-            word_value += letter.calculate_value()
-            if letter.multiplier_type == 'word':
-                word_multiplier = letter.multiplier
-                letter.multiplier_type = None
-        word_value *= word_multiplier
-        return word_value
 
-class Player:
-    def __init__(self):
-        self.name = ""
-        self.tiles = []
-        self.score = 0
-
-    def set_name(self,name):
-        self.name = name
-    
-    def get_name(self):
-        return self.name
-
-    def take_tiles(self, bag:BagTiles, amount):
-        self.tiles.extend(bag.take(amount))
-    
-    def increase_score(self,amount):
-        self.score += amount
-
-    def get_score(self):
-        return self.score
-
-    def refill(self,bag:BagTiles):
-        self.tiles += bag.take(
-            7- len(self.tiles)
-        )
-
-    def has_letters(self, tiles=[]):
-        letras_jugador = [tile.letter for tile in self.tiles]
-        letras_palabra = [tile.letter for tile in tiles]
-        letras_necesarias = Counter(letras_palabra)
-        for letra, cantidad in letras_necesarias.items():
-            if letras_jugador.count(letra) < cantidad:
-                return False
-        return True
-
-
-class Board:
-    def __init__(self):
-        self.is_empty = True
-        self.grid = [
-            [Cell(1,'letter') for _ in range (15) ]
-            for _ in range (15)
-        ]
-
-    def validate_empty(self):
-        if self.grid[7][7] is not None:
-            self.is_empty = False
-        return self.is_empty
-
-    def validate_word_inside_board(self, word, location, orientation):
-        len_word = len(word)
-        pos_x = location[0]
-        pos_y = location[1]
-
-        if orientation == 'H':
-            if pos_x + len_word > 15:
-                return False
+        for cell in word:
+            if cell.multiplier_type == 'letter':
+                total_value += cell.calculate_letter_value()
+            elif cell.multiplier_type == 'word':
+                total_value += cell.calculate_letter_value()
+                word_multiplier *= cell.multiplier
             else:
-                return True
-        elif orientation == 'V':
-            if pos_y + len_word > 15:
-                return False
-            else:
-                return True
-
-    def get_words():
-        '''
-        Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion y orientacion 
-        validar palabras (unir al dic)
-        '''
-
-    def put_words(self, word, location, orientation):
-        len_word = len(word)
-        pos_x = location[0]
-        pos_y = location[1]
-        if orientation == 'H':
-            for i in range (len_word):
-                self.grid[pos_x][pos_y + i].add_letter(word[i])
-        else:
-            for i in range (len_word):
-                self.grid[pos_x + i][pos_y].add_letter(word[i])
-
-    def validate_word_place_board(self,word,location,orientation):
-        center_of_board = (7, 7)
-        for i in range(len(word)):
-            pos_x = location[0] + i if orientation == "H" else location[0] #si es h, va sumando i horizontalmente
-            pos_y = location[1] + i if orientation == "V" else location[1] # idem vertical
-            print(f"posicion ({pos_x}, {pos_y}) de letra '{word[i]}'")
-            if pos_x == center_of_board[0] and pos_y == center_of_board[1]: # si x e y son 7,7
-                print ("pasa por el centro")
-                return True
-        return False
+                total_value += cell.letter.value
+        total_value *= word_multiplier
+        return total_value

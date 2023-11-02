@@ -1,4 +1,5 @@
 from game.cli import *
+from game.board import Board
 from unittest.mock import patch
 import unittest
 
@@ -39,6 +40,9 @@ class TestCLI(unittest.TestCase):
             1,
         )
 
+    def test_show_board(self):
+        board = Board()
+        show_board(board)
 
 if __name__ == '__main__':
     unittest.main()

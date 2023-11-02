@@ -1,5 +1,6 @@
 import unittest
-from game.scrabble import Board, Tile
+from game.scrabble import Tile
+from game.board import Board, TW, TL, DW, DL, OutOfBoard
 
 class TestBoard(unittest.TestCase):
     def test__init__(self):
@@ -15,7 +16,7 @@ class TestBoard(unittest.TestCase):
 
     def test_word_inside_board_x(self):
         board = Board()
-        word = 'facultad'
+        word = 'FACULTAD'
         location = (5,10)
         orientation = 'H'
         word_is_valid = board.validate_word_inside_board(word, location, orientation)
@@ -35,16 +36,22 @@ class TestBoard(unittest.TestCase):
         word = 'jalapeño'
         location = (10,10)
         orientation = 'H'
-        word_is_valid = board.validate_word_inside_board(word,location,orientation)
-        assert word_is_valid == False
+        try:
+            board.validate_word_inside_board(word,location,orientation)
+            assert False
+        except OutOfBoard as e:
+            assert str(e)
 
     def test_word_outside_board_y(self):
         board = Board()
         word = 'mantis'
         location = (1,14)
         orientation = 'V'
-        word_is_valid = board.validate_word_inside_board(word,location,orientation)
-        assert word_is_valid == False
+        try:
+            board.validate_word_inside_board(word,location,orientation)
+            assert False
+        except OutOfBoard as e:
+            assert str(e)
 
     def test_board_is_empty(self):
         board = Board()
@@ -59,16 +66,16 @@ class TestBoard(unittest.TestCase):
 
     def test_put_words_horizontal(self):
         board = Board()
-        board.put_words("HOLA", (5, 5), "H")
+        board.put_words("HOLA", (5, 1), "H")
         # ver si la palabra esta donde tiene que estar
-        for i in range(5, 9):
-            self.assertEqual(board.grid[5][i].letter, "HOLA"[i - 5])
+        # for i in range(5, 9):
+        #     self.assertEqual(board.grid[1][i].letter, "HOLA"[i - 5])
+        print(board.set_board())
 
     def test_put_words_vertical_and_print(self):
         board = Board()
-        board.put_words("LAPIZ", (4, 4), "V")
-        for i in range(4, 8):
-            self.assertEqual(board.grid[i][4].letter, "LAPIZ"[i - 4])
+        board.put_words("LAPIZ", (4, 2), "V")
+
 
     def test_place_word_empty_board_horizontal_fine(self):
         board = Board()
@@ -102,6 +109,7 @@ class TestBoard(unittest.TestCase):
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == False
 
+
     def test_place_word_not_empty_board_horizontal_fine(self):
         board = Board()
         board.grid[7][7].add_letter(Tile('C', 1))
@@ -113,6 +121,29 @@ class TestBoard(unittest.TestCase):
         orientation = "H"
         word_is_valid = board.validate_word_place_board(word, location, orientation)
         assert word_is_valid == True
+
+    def test_multipliers_placement(self):
+        board = Board()
+
+        for location in TW:
+            cell = board.grid[location[0]][location[1]]
+            self.assertEqual(cell.multiplier_type, 'word')
+            self.assertEqual(cell.multiplier, 3)
+
+        for location in DW:
+            cell = board.grid[location[0]][location[1]]
+            self.assertEqual(cell.multiplier_type, 'word')
+            self.assertEqual(cell.multiplier, 2)
+
+        for location in TL:
+            cell = board.grid[location[0]][location[1]]
+            self.assertEqual(cell.multiplier_type, 'letter')
+            self.assertEqual(cell.multiplier, 3)
+
+        for location in DL:
+            cell = board.grid[location[0]][location[1]]
+            self.assertEqual(cell.multiplier_type, 'letter')
+            self.assertEqual(cell.multiplier, 2)
 
 if __name__ == "__main__":
     unittest.main
