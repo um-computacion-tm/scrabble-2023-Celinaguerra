@@ -1,5 +1,6 @@
 import unittest
-from game.scrabble import BagTiles, Tile, Player
+from game.scrabble import BagTiles, Tile
+from game.player import Player
 
 class TestPlayer(unittest.TestCase):
     def test_init(self):
@@ -11,6 +12,11 @@ class TestPlayer(unittest.TestCase):
         bag = BagTiles()
         player.take_tiles(bag, 7)
         self.assertEqual(len(player.tiles), 7)
+
+    def test_show_tiles(self):
+        player = Player()
+        player.tiles=['F', 'K', 'M']
+        self.assertEqual(player.show_tiles(), ['F','K','M'])
 
     def test_set_name(self):
         player = Player()
