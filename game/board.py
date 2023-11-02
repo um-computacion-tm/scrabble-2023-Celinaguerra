@@ -24,8 +24,8 @@ class Board:
 
     def put_words(self, word, location, orientation):
         len_word = len(word)
-        pos_x = location[0]
-        pos_y = location[1]
+        pos_x = location[1]
+        pos_y = location[0]
         if orientation == 'H':
             for i in range (len_word):
                 self.grid[pos_x][pos_y + i].add_letter(word[i])
@@ -77,3 +77,22 @@ class Board:
             self.cell_multiplier(location, 'letter', 3)
         for location in DL:
             self.cell_multiplier(location, 'letter', 2)
+
+
+    def set_board(self):
+        board = ""
+        board += "\n"
+        #header row
+        board += "   | " + "  | ".join(str(item) for item in range(0,10)) + "  | " + " | ".join(str(item) for item in range(10,15)) + " | "
+        board += "\n   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
+        for i in range(0,15):
+            row = self.grid[i]
+            row_str = str(i) + "  | "
+            for cell in row:
+                if cell.letter is None:
+                    row_str += ".  | "
+                else:
+                    row_str += cell.letter + "  | "
+            board += "\n" + row_str
+        board += "\n"
+        print(board)

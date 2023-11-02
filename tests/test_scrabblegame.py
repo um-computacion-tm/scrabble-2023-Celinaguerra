@@ -31,3 +31,13 @@ class TestScrabbleGame(unittest.TestCase):
         scrabble_game = ScrabbleGame(players_count=1)
         scrabble_game.players[0].set_name('Celi')
         self.assertEqual(scrabble_game.show_score(), {'Celi':0})
+
+    def test_status_active(self):
+        scrabble_game = ScrabbleGame(players_count=1)
+        scrabble_game.playing()
+        self.assertEqual(scrabble_game.current_status, 'playing')
+
+    def test_status_notactive(self):
+        scrabble_game = ScrabbleGame(players_count=1)
+        scrabble_game.stopped_playing()
+        self.assertEqual(scrabble_game.current_status, 'not playing')
