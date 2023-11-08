@@ -61,7 +61,7 @@ class ScrabbleCli:
         positions = positions.split(',')
         positions = [int(position) for position in positions]
         new_tiles = self.game.bag_tiles.take(len(positions))
-        old_tiles = self.game.exchange_tiles(positions)
+        old_tiles = self.exchange_tiles(positions)
         self.game.bag_tiles.put(old_tiles)
         print('The following tiles have been exchanged: ')
         print(self.game.current_player.show_tiles())

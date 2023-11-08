@@ -22,5 +22,26 @@ class TestCLI(unittest.TestCase):
         scrabblecli.stopped_playing()
         self.assertEqual(scrabblecli.game.current_status, 'not playing')
 
+
+    @patch('builtins.input', side_effect=3)
+    def test_option_3(self, mock_input):
+        scrabble_game = ScrabbleGame(players_count=2)
+        with patch.object(ScrabbleCli, 'exchange_tiles') as mock_exchange_tiles:
+            cli = ScrabbleCli()
+            cli.game = scrabble_game
+            cli.option_chosen(3)
+            mock_exchange_tiles.assert_called_once()
+
+    @patch('builtins.input', side_effect='N')
+    def test_option_3N(self, mock_input):
+        scrabble_game = ScrabbleGame(players_count=2)
+        with patch.object(ScrabbleCli, 'exchange_tiles') as mock_exchange_tiles:
+            cli = ScrabbleCli()
+            cli.game = scrabble_game
+            cli.option_chosen('N')
+            mock_exchange_tiles.assert_not_called()
+
+
+
 if __name__ == '__main__':
     unittest.main()
