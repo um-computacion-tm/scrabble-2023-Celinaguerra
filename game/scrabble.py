@@ -10,6 +10,9 @@ class Tile:
         self.letter = letter
         self.value = value
 
+    def __repr__(self):
+        return self.letter
+
 class BagTiles:
     def __init__(self):
         self.tiles = [
@@ -124,6 +127,7 @@ class BagTiles:
 
     def put(self,tiles):
         self.tiles.extend(tiles)
+
 
     def get_tile_value(self, letter):
         for tile in self.tiles:

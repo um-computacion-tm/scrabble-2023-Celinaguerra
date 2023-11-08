@@ -1,12 +1,27 @@
-<<<<<<< HEAD
-=======
+##[0.0.33] - 2023-11-8
+
+### Updated
+
+- scrabblegame and scrabblecli methods, fixing tests
+
+##[0.0.32] - 2023-11-7
+
+### Added
+
+- play_turn method
+
+### Updated
+
+- main method, moving from scrabblegame to cli
+
+- added tests, not finished
+
 ##[0.0.31] - 2023-11-1
 
 ### Added
 
 - joker method, show_board, fixed locations and print_board
 
->>>>>>> nocorrupted3
 ##[0.0.30] - 2023-10-24
 
 ### Added

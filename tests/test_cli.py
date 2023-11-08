@@ -1,53 +1,47 @@
-from game.cli import *
+from game.scrabblecli import *
 from game.board import Board
 from unittest.mock import patch
 import unittest
 
 
-# class TestMain(unittest.TestCase):
-#         @patch('builtins.print')
-#         @patch('game.cli.show_player')
-#         @patch('game.cli.show_board')
-#         @patch('game.cli.get_player_count', return_value=3)
-#         @patch('game.cli.get_inputs', return_value=((1, 3), 'H', 'CASA'))
-#         @patch.object(ScrabbleGame, 'is_playing', side_effect=[True, False])
-#         @patch.object(ScrabbleGame, 'get_current_player', return_value=(0, "Player",))
-#         @patch.object(ScrabbleGame, 'play')
-#         def test_main(self, *args):
-#             main()
 
 class TestCLI(unittest.TestCase):
-    @patch('builtins.input', return_value='3')
-    def test_get_player_count(self, input_patched):
-        self.assertEqual(
-            get_player_count(),
-            3,
-        )
-
-    @patch('builtins.print')
-    @patch('builtins.input', side_effect=['A', '3'])
-    def test_get_player_count_wrong_input(self, input_patched, print_patched):
-        self.assertEqual(
-            get_player_count(),
-            3,
-        )
-
-    @patch('builtins.print')
-    @patch('builtins.input', side_effect=['10', '1'])
-    def test_get_player_count_control_max(self, input_patched, print_patched):
-        self.assertEqual(
-            get_player_count(),
-            1,
-        )
 
     def test_show_board(self):
-        board = Board()
-        show_board(board)
+        self.cli = ScrabbleCli()
+        board = self.cli.game.board
+        self.cli.game.board.set_board()
 
-    #### ver si anda
-    def test_print_board(self):
-        #print_board(self)
-        pass
+    def test_status_active(self):
+        scrabblecli = ScrabbleCli()
+        scrabblecli.status_playing()
+        self.assertEqual(scrabblecli.game.current_status, 'playing')
+
+    def test_status_noactive(self):
+        scrabblecli = ScrabbleCli()
+        scrabblecli.stopped_playing()
+        self.assertEqual(scrabblecli.game.current_status, 'not playing')
+
+
+    @patch('builtins.input', side_effect=3)
+    def test_option_3(self, mock_input):
+        scrabble_game = ScrabbleGame(players_count=2)
+        with patch.object(ScrabbleCli, 'exchange_tiles') as mock_exchange_tiles:
+            cli = ScrabbleCli()
+            cli.game = scrabble_game
+            cli.option_chosen(3)
+            mock_exchange_tiles.assert_called_once()
+
+    @patch('builtins.input', side_effect='N')
+    def test_option_3N(self, mock_input):
+        scrabble_game = ScrabbleGame(players_count=2)
+        with patch.object(ScrabbleCli, 'exchange_tiles') as mock_exchange_tiles:
+            cli = ScrabbleCli()
+            cli.game = scrabble_game
+            cli.option_chosen('N')
+            mock_exchange_tiles.assert_not_called()
+
+
 
 if __name__ == '__main__':
     unittest.main()
