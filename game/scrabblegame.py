@@ -24,12 +24,6 @@ class ScrabbleGame:
             index = self.players.index(self.current_player) + 1
             self.current_player = self.players[index]
 
-    def play(self, word, location, orientation):
-        self.validate_word(word, location, orientation)
-        words = self.board.put_words(word, location, orientation)
-        total = self.cell.calculate_word_value(words)
-        self.players[self.current_player].score += total
-        self.next_turn()
 
     def show_score(self):
         player_scores = {}
@@ -37,17 +31,54 @@ class ScrabbleGame:
             player_scores[player.get_name()] = player.get_score()
         return player_scores
 
+    # def play_turn(self):
+    #     #jugador tiene x letras
+    #     #da una palabra
+    #     #verificar si se puede formar con las letras
+    #     #verificar si existe
+    #     #si es el primer turno -> que esté en el (7,7)
+    #     #verificar si entra en el tablero
+    #     #quitar letras (ver si se rellena la mano despues ahora o en el prox turno)
+    #     #dar puntaje (chequear palabras alrededor)
+    #     #pasar turno
+    #     pass
+
     def play_turn(self):
-        #jugador tiene x letras
-        #da una palabra
-        #verificar si se puede formar con las letras
-        #verificar si existe
-        #si es el primer turno -> que esté en el (7,7)
-        #verificar si entra en el tablero
-        #quitar letras (ver si se rellena la mano despues ahora o en el prox turno)
-        #dar puntaje (chequear palabras alrededor)
-        #pasar turno
-        pass
+        player = self.current_player
+        player_tiles = player.show_tiles()
+        self.show_board()
+        print(f"Current player: {player.get_name()}")
+        print(f"Your tiles: {', '.join(tile.letter for tile in player_tiles)}")
+
+        word = input("Enter the word you want to play: ").upper()
+        location = tuple(map(int, input("Enter the location (row, column): ").split(',')))
+        orientation = input("Enter the orientation (H for horizontal, V for vertical): ").upper()
+
+        try:
+            if not player.has_letters(word):
+                raise Exception("You don't have the required letters to form this word.")
+            if not self.dic.valid_word(word):
+                raise Exception("The word is not valid according to the dictionary.")
+
+            if self.current_player == self.players[0] and self.validate_empty():
+                if location != (7, 7):
+                    raise Exception("In the first turn, the word must pass through the center (7, 7).")
+                self.board.put_words(word, location, orientation)
+            else:
+                if not self.validate_word_inside_board(word, location, orientation):
+                    raise Exception("Invalid word placement on the board.")
+                if not self.validate_word_place_board(word, location, orientation):
+                    raise Exception("The word is not properly placed on the board.")
+                self.board.put_words(word, location, orientation)
+
+            words = self.board.put_words(word, location, orientation)
+            total = self.cell.calculate_word_value(words)
+            player.increase_score(total)
+            player.refill(self.bag_tiles)
+            self.next_turn()
+
+        except Exception as e:
+            print(f"Error: {e}")
 
 
     def playing(self):
@@ -55,13 +86,3 @@ class ScrabbleGame:
 
     def stopped_playing(self):
         self.current_status = 'not playing'
-
-    # def validate_word_dictionary(self, word, location, orientation):
-    #     if not self.dic.valid_word(word):
-    #         raise InvalidWordException("Su palabra no existe en el diccionario")
-    #     if not self.board.validate_word_inside_board(word, location, orientation):
-    #         raise InvalidPlaceWordException("Su palabra excede el tablero")
-    #     if not self.board.validate_word_place_board(word, location, orientation):
-    #         raise InvalidPlaceWordException("Su palabra esta mal puesta en el tablero")
-
-    #quizás lo borro, ya existe algo similar en DIctionary

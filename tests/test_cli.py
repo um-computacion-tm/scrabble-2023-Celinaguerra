@@ -44,10 +44,6 @@ class TestCLI(unittest.TestCase):
         board = Board()
         show_board(board)
 
-    #### ver si anda
-    def test_print_board(self):
-        #print_board(self)
-        pass
 
 if __name__ == '__main__':
     unittest.main()
