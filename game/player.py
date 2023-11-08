@@ -13,7 +13,6 @@ class Player:
     def get_name(self):
         return self.name
 
-    
     def increase_score(self,amount):
         self.score += amount
 
@@ -30,6 +29,8 @@ class Player:
         self.tiles += bag.take(
             7- len(self.tiles)
         )
+
+
 
     def has_letters(self, tiles=[]):
         letras_jugador = [tile.letter for tile in self.tiles]
