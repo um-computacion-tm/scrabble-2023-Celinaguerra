@@ -3,6 +3,7 @@ from game.board import *
 from game.player import *
 from game.scrabble import *
 from unittest.mock import patch, Mock, MagicMock
+from io import StringIO
 import unittest
 
 
@@ -33,6 +34,28 @@ class TestCLI(unittest.TestCase):
             cli.game = scrabble_game
             cli.option_chosen(1)
             mock_place_word.assert_called_once()
+
+    @patch('builtins.input', side_effect=['N'])
+    def test_exchange_tiles_quit(self, mock_input):
+        scrabble_game = ScrabbleGame(players_count=2)
+        cli = ScrabbleCli()
+        cli.game = scrabble_game
+        with patch.object(ScrabbleCli, 'play_turn') as mock_play_turn:
+            result = cli.exchange_tiles()
+            mock_play_turn.assert_called_once()
+            self.assertFalse(result)  # Ensure that the method returns False when 'N' is input
+
+    @patch('builtins.input', side_effect=['1,2,3,N'])
+    def test_exchange_tiles_successful(self, mock_input):
+        scrabble_game = ScrabbleGame(players_count=2)
+        cli = ScrabbleCli()
+        cli.game = scrabble_game
+        with patch.object(BagTiles, 'take', return_value=[Tile('A', 1), Tile('B', 3), Tile('C', 3)]):
+            with patch.object(BagTiles, 'put') as mock_put:
+                result = cli.exchange_tiles()
+                mock_put.assert_called_once()
+                self.assertTrue(result)
+
 
     @patch('game.scrabble.BagTiles.joker_value')
     def test_option_2(self, mock_joker_value):

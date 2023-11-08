@@ -7,6 +7,9 @@ class Player:
         self.tiles = []
         self.score = 0
 
+    def __str__(self):
+        return self.name
+
     def set_name(self,name):
         self.name = name
     
@@ -40,3 +43,15 @@ class Player:
             if letras_jugador.count(letra) < cantidad:
                 return False
         return True
+    
+
+        # letras_jugador = []
+        # for tile in self.tiles:
+        #     letras_jugador.append(tile.letter)
+
+        # letras_palabra = [tile.letter for tile in tiles]
+        # letras_necesarias = Counter(letras_palabra)
+        # for letra, cantidad in letras_necesarias.items():
+        #     if letras_jugador.count(letra) < cantidad:
+        #         return False
+        # return True

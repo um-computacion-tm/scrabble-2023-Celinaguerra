@@ -28,8 +28,3 @@ class ScrabbleGame:
         player_scores = {player: player.get_score() for player in self.players}
         return player_scores
 
-    def validate_first_turn(self, word, location, orientation):
-        self.board.validate_word_place_board(word, location, orientation)
-
-    def validate_turn(self, word, location,orientation):
-        self.board.validate_word_inside_board(word, location, orientation)

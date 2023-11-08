@@ -24,7 +24,13 @@ class ScrabbleCli:
 
     def option_chosen(self,option):
         if option == 1:
-            self.place_word()
+            word = str(input("Enter the word you want to play: ").upper())
+            #location = tuple(map(int, input("Enter the location (row, column): ").split(',')))
+            column_x = int(input('Enter column: ')) 
+            row_y = int(input('Enter row: '))
+            location = (column_x, row_y)
+            orientation = input("Enter the orientation (H for horizontal, V for vertical): ").upper()
+            self.place_word( word, location, orientation)
 
         elif option == 2:
             self.game.bag_tiles.joker_value()
@@ -70,10 +76,6 @@ class ScrabbleCli:
         return True
 
     def place_word(self, word, location, orientation):
-        word = input("Enter the word you want to play: ").upper()
-        location = tuple(map(int, input("Enter the location (row, column): ").split(',')))
-        orientation = input("Enter the orientation (H for horizontal, V for vertical): ").upper()
-
         try:
             if not self.game.current_player.has_letters(word):
                 raise Exception("You don't have the required letters to form this word.")
